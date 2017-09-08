@@ -1,0 +1,134 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>mnist</title>
+	<link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}">
+	<style type="text/css">
+		#mnist-main {
+			border: 1px solid #a0a0a0;
+			background-image: url('static/images/background.jpg');
+		}
+		#img-main {
+			border: 1px solid #a0a0a0;
+		}
+		th, td {
+			text-align: center !important;
+		}
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<h4 align="center" style="padding: 25px;">mnist <span class="text-muted">classifier</span></h4>
+		<div class="row justify-content-center">
+			<div class="col-lg-5">
+				<canvas id="mnist-main" height="500" width="500"></canvas>
+				<br>
+				<button type="button" id="clear-button" class="btn btn-outline-secondary" onclick="clear()">Clear</button>
+				<button type="button" id="submit-button" class="btn btn-primary">Submit</button>
+			</div>
+			<div class="col-lg-5">
+				<center>
+					<canvas id="img-main" height="100" width="100"></canvas>
+				</center>
+				<br>
+				<br>
+				<p align="center">mnist <span class="text-muted">analysis using CNN</span></p>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Number</th>
+							<th>Percentage %</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">1</th>
+							<td>--</td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>--</td>
+						</tr>
+						<tr>
+							<th scope="row">3</th>
+							<td>--</td>
+						</tr>
+						<tr>
+							<th scope="row">4</th>
+							<td>--</td>
+						</tr>
+						<tr>
+							<th scope="row">5</th>
+							<td>--</td>
+						</tr>
+						<tr>
+							<th scope="row">6</th>
+							<td>--</td>
+						</tr>
+						<tr>
+							<th scope="row">7</th>
+							<td>--</td>
+						</tr>
+						<tr>
+							<th scope="row">8</th>
+							<td>--</td>
+						</tr>
+						<tr>
+							<th scope="row">9</th>
+							<td>--</td>
+						</tr>
+						<tr>
+							<th scope="row">0</th>
+							<td>--</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<p align="center" style="padding: 25px;">Made by <span class="text-muted">Omkar Prabhu</span></p>
+	</div>
+	<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+	<script type="text/javascript">
+		var el = document.getElementById('mnist-main');
+		var ctx = el.getContext('2d');
+
+		ctx.lineWidth = 10;
+		ctx.lineJoin = ctx.lineCap = 'round';
+
+		var isDrawing, points = [ ];
+
+		el.onmousedown = function(e) {
+			isDrawing = true;
+			points.push({ x: e.clientX, y: e.clientY });
+		};
+
+		el.onmousemove = function(e) {
+			if (!isDrawing) return;
+
+			ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+			points.push({ x: e.clientX, y: e.clientY });
+
+			ctx.beginPath();
+			ctx.moveTo(points[0].x, points[0].y);
+			for (var i = 1; i < points.length; i++) {
+			ctx.lineTo(points[i].x, points[i].y);
+			}
+			ctx.stroke();
+		};
+
+		el.onmouseup = function() {
+			isDrawing = false;
+			points.length = 0;
+		};
+
+		document.getElementById('clear-button').onclick = function() {
+			ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+		}
+
+		document.getElementById('submit-button').onclick = function() {
+
+		}
+	</script>
+</body>
+</html>
